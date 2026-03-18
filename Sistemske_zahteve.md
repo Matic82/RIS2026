@@ -40,7 +40,7 @@ stateDiagram-v2
     Osnovni --> Srebrni : Nakupi prvič> 499 EUR
     Srebrni --> Zlati : Še 2x zapored> 500 EUR
     
-    Zlati --> Srebrni : Nakupi < 500 EUR\n(izguba pogojev)
+    Zlati --> Srebrni : Nakupi < 500 EUR(izguba pogojev)
     Srebrni --> Bronasti : 2 meseca zaporedi nakupi < 200 EUR
     
     Bronasti --> Srebrni : 2 meseca zapored nakupi >= 200 EUR
