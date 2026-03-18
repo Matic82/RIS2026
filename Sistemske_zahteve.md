@@ -1,3 +1,4 @@
+```markdown
 # Specifikacija zahtev za program lojalnosti Maestro
 
 **Avtor:** Mattia Lauzana
@@ -11,7 +12,7 @@
 ---
 
 ## 1. Kratek opis sistema
-V trgovski verigi Maestro bi želeli vpeljati program lojalnosti. Z njim želimo motivirati stranke, da čim več kupijo v naši trgovski verigi. Portal si predstavljamo kot spletno aplikacijo, prek katere lahko nekdo, ki je član programa, pregleduje svoje točke zvestobe ter jih koristi. 
+V trgovski verigi Maestro bi želeli vpeljati program lojalnosti. Z njim želimo motivirati stranke, da čim več kupijo v naši trgovski verigi. Portal si predstavljamo kot spletno aplikacijo, prek katere lahko nekdo, ki je član programa, pregleduje svoje točke zvestobe ter jih koristi.
 
 ## 2. Funkcionalne zahteve
 
@@ -31,6 +32,20 @@ V trgovski verigi Maestro bi želeli vpeljati program lojalnosti. Z njim želimo
 * Da stranka ohranja status srebrni, mora njen znesek nakupa znašati vsaj 200 EUR, za ohranjanje statusa zlati pa vsaj 500 EUR.
 * Če stranka nima pogojev za ohranitev statusa zlati, pridobi status srebrni.
 * Če stranka nima pogojev za ohranitev statusa srebrni in sicer dva meseca zapored, dobi status bronasti in v njem ostane, vse dokler dva zaporedna meseca ne opravi najmanj za 200 EUR nakupov oziroma, če opravi nakup pod 50 EUR, pride nazaj v osnovni status.
+* Spodnji diagram prikazuje pravila prehajanja med posameznimi nivoji lojalnosti:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Osnovni : Včlanitev v program
+    Osnovni --> Srebrni : Nakupi prvič > 499 EUR
+    Srebrni --> Zlati : Še 2x zapored > 500 EUR
+    
+    Zlati --> Srebrni : Nakupi < 500 EUR (izguba pogojev)
+    Srebrni --> Bronasti : 2 meseca zapored nakupi < 200 EUR
+    
+    Bronasti --> Srebrni : 2 meseca zapored nakupi >= 200 EUR
+    Bronasti --> Osnovni : Nakup < 50 EUR
+```
 
 ### Izračun in dodeljevanje točk zvestobe
 * Točke zvestobe bi računali enkrat na mesec za pretekli mesec.
