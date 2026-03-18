@@ -56,7 +56,6 @@ stateDiagram-v2
 * Več kot bi znašali njeni nakupi, več točk bi stranka dobila.
 * Radi pa bi imeli možnost, da ta pravila še kasneje sami spreminjamo.
 
-**Matrika za dodeljevanje točk zvestobe:**
 | Znesek nakupov | Bronasti | Osnovni | Srebrni | Zlati |
 | :--- | :--- | :--- | :--- | :--- |
 | **Do 200 EUR** | 0 točk | 5 točk | 7.5 točk | 10 točk |
