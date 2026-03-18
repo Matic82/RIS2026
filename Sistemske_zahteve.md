@@ -35,15 +35,16 @@ V trgovski verigi Maestro bi želeli vpeljati program lojalnosti. Z njim želimo
 
 ```mermaid
 stateDiagram-v2
+    direction TB
     [*] --> Osnovni : Včlanitev v program
-    Osnovni --> Srebrni : Nakupi prvič > 499 EUR
-    Srebrni --> Zlati : Še 2x zapored > 500 EUR
+    Osnovni --> Srebrni : Nakupi prvič> 499 EUR
+    Srebrni --> Zlati : Še 2x zapored> 500 EUR
     
-    Zlati --> Srebrni : Nakupi < 500 EUR (izguba pogojev)
-    Srebrni --> Bronasti : 2 meseca zapored nakupi < 200 EUR
+    Zlati --> Srebrni : Nakupi < 500 EUR\n(izguba pogojev)
+    Srebrni --> Bronasti : 2 meseca zaporedi nakupi < 200 EUR
     
     Bronasti --> Srebrni : 2 meseca zapored nakupi >= 200 EUR
-    Bronasti --> Osnovni : Nakup < 50 EUR
+    Bronasti --> Osnovni : Nakup< 50 EUR
 ```
 
 ### Izračun in dodeljevanje točk zvestobe
