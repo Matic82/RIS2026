@@ -1,4 +1,3 @@
-```markdown
 # Specifikacija zahtev za program lojalnosti Maestro
 
 **Avtor:** Mattia Lauzana
