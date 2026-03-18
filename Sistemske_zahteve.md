@@ -1,5 +1,3 @@
-<img width="1302" height="688" alt="image" src="https://github.com/user-attachments/assets/8b62b036-1070-48a7-8d51-4217b7c3e8d1" /># Specifikacija zahtev za program lojalnosti Maestro
-
 **Avtor:** Mattia Lauzana
 **Predmet:** Razvoj informacijskih sistemov
 
@@ -139,3 +137,4 @@ flowchart LR
 
     PoslovniIS -->|Pošilja podatke| UC11
     UC11 --> UC12
+```
