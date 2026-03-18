@@ -1,4 +1,4 @@
-# Specifikacija zahtev za program lojalnosti Maestro
+<img width="1302" height="688" alt="image" src="https://github.com/user-attachments/assets/8b62b036-1070-48a7-8d51-4217b7c3e8d1" /># Specifikacija zahtev za program lojalnosti Maestro
 
 **Avtor:** Mattia Lauzana
 **Predmet:** Razvoj informacijskih sistemov
@@ -89,4 +89,53 @@ Portal naj omogoča tudi administracijo, pod čemer si predstavljamo vsaj nasled
 ## 5. Slovar izrazov
 * **Program lojalnosti:** Sistem motiviranja strank, da čim več kupijo v trgovski verigi.
 * **Točke zvestobe:** Točke, ki jih stranka zbira z nakupi.
-* **Poslovni IS:** Sistem, ki ga trgovska veriga uporablja in iz katerega se pridobiva podatek o znesku nakupov.
+
+## 6. Diagram primerov uporabe
+
+Spodnji diagram na visoki ravni prikazuje glavne akterje v sistemu in njihove ključne interakcije (primere uporabe) s spletnim portalom, administracijskim vmesnikom ter zalednim sistemom.
+
+```mermaid
+flowchart LR
+    %% Akterji
+    Stranka([Stranka])
+    Admin([Administrator])
+    PoslovniIS([Poslovni IS])
+
+    %% Spletni portal za stranke
+    subgraph Portal za stranke
+        UC1(Registracija prek spleta)
+        UC2(Pregled zbranih točk)
+        UC3(Koriščenje točk)
+        UC4(Pregled nakupnega programa)
+        UC5(Pregled zneskov nakupov)
+    end
+
+    Stranka --> UC1
+    Stranka --> UC2
+    Stranka --> UC3
+    Stranka --> UC4
+    Stranka --> UC5
+
+    %% Administracijski vmesnik
+    subgraph Administracijski vmesnik
+        UC6(Pregled statusov strank)
+        UC7(Pregled statistike nakupov)
+        UC8(Poljubne poizvedbe po bazi)
+        UC9(Upravljanje z nagradami)
+        UC10(Upravljanje pravil in točkovanja)
+    end
+
+    Admin --> UC6
+    Admin --> UC7
+    Admin --> UC8
+    Admin --> UC9
+    Admin --> UC10
+
+    %% Zaledni procesi in integracije
+    subgraph Zaledni sistem
+        UC11(Zajem zneskov nakupov)
+        UC12(Mesečni preračun statusov in točk)
+    end
+
+    PoslovniIS -->|Pošilja podatke| UC11
+    UC11 --> UC12
