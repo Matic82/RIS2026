@@ -38,6 +38,13 @@ V trgovski verigi Maestro bi želeli vpeljati program lojalnosti. Z njim želimo
 * Več kot bi znašali njeni nakupi, več točk bi stranka dobila.
 * Radi pa bi imeli možnost, da ta pravila še kasneje sami spreminjamo.
 
+**Matrika za dodeljevanje točk zvestobe:**
+| Znesek nakupov | Bronasti | Osnovni | Srebrni | Zlati |
+| :--- | :--- | :--- | :--- | :--- |
+| **Do 200 EUR** | 0 točk | 5 točk | 7.5 točk | 10 točk |
+| **Med 200 EUR in 1000 EUR** | 5 točk | 10 točk | 15 točk | 20 točk |
+| **Nad 1000 EUR** | 10 točk | 20 točk | 30 točk | 40 točk |
+
 ### Spletni portal za stranke
 Spletna aplikacija oziroma portal bo strankam omogočal vsaj naslednje možnosti:
 * pregled zbranih točk zvestobe
