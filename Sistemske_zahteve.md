@@ -7,6 +7,8 @@
 | 1.0 | 18. 03. 2026 | Mattia Lauzana | Začetni osnutek specifikacije zahtev za razvoj rešitve |
 | 1.1 | 25. 03. 2026 | Mattia Lauzana | Dodan diagram primerov uporabe in funkcionalno dekompozicijo |
 | 1.2 | 1. 04. 2026 | Mattia Lauzana | Podatkovni model in maske za uporabnika |
+| 1.3 | 8. 04. 2026 | Mattia Lauzana | Dodana tabela analiz |
+
 
 ---
 
