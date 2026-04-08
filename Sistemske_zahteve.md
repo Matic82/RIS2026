@@ -13,28 +13,27 @@
 ## 1. Kratek opis sistema
 V trgovski verigi Maestro bi želeli vpeljati program lojalnosti. Z njim želimo motivirati stranke, da čim več kupijo v naši trgovski verigi. Sistem bo sestavljen iz dveh glavnih sklopov:
 
-1. **Zaledni sistem:** Avtomatiziran sistem, ki bo vsak mesec (na podlagi podatkov iz poslovnega IS-a) preračunal zneske preteklih nakupov stran. Najprej bo strankam glede na vnaprej določena pravila posodobil njihov status (osnovni, bronasti, srebrni, zlati), nato pa jim glede na status in znesek nakupov dodelil ustrezno število točk zvestobe.
+1. **Zaledni sistem:** Avtomatiziran sistem, ki bo vsak mesec (na podlagi podatkov iz poslovnega IS-a) preračunal zneske preteklih nakupov stran. Najprej bo strankam glede na vnaprej določena pravila posodobil njihov status (osnovni, bronasti, srebrni, zlati), nato pa jim glede na status in znesek nakupov dodelil ustrezno število točk zvestobe.  
 2. **Spletna aplikacija (Portal):** Prek spletnega portala bodo lahko stranke (člani programa) dostopale do svojega uporabniškega računa, pregledujele zbrane točke zvestobe ter jih koristile za različne nagrade. Portal bo poleg uporabniškega dela vključeval tudi administracijski vmesnik za upravljanje program.
 
 ## 2. Funkcionalne zahteve
 
-### Registracija in upravljanje uporabnikov
-* Vsaka stranka bo lahko kadarkoli zaprosila za vključitev v program.
-* Strankam bi želeli ponuditi možnost, da se v program registrirajo prek spleta.
-* Prek spleta bi podali svoje osebne podatke in se registrirali.
-* To mora biti narejeno tako, da bo varno, v smislu, da se ne more nekdo registrirati z elektronskim naslovom, ki ni njegov.
-* Ob registraciji bi moral vsak uporabnik dobiti svoj uporabniški račun, ki ga bo lahko kasneje koristil za identifikacijo ob vstopu na portal.
-* Dobila bo kartico lojalnosti, ki bi jo strankam poslali po navadni pošti.
+| ID | Funkcija / Opis zahteve |
+| :--- | :--- |
+| **Z1** | **Varna registracija in prijava:** Spletna včlanitev z varnim preverjanjem e-maila in ustvarjanjem uporabniškega računa. Dodelitev "Osnovnega" statusa. |
+| **Z2** | **Izdaja kartice lojalnosti:** Evidentiranje za sistemski proces pošiljanja fizične kartice po pošti. |
+| **Z3** | **Mesečni preračun statusov:** Sistemsko preverjanje zneskov nakupov iz preteklega meseca in dodeljevanje ustreznih nivojev lojalnosti. |
+| **Z4** | **Izračun točk zvestobe:** Dodeljevanje točk glede na določen status in znesek nakupa (po tabeli točkovanja). Izvede se po preračunu statusa. |
+| **Z5** | **Pregled in koriščenje točk:** Omogočanje stranki, da pregleduje stanje točk in jih koristi za nagrade iz nakupnega programa. |
+| **Z6** | **Pregled zneskov nakupov:** Stranka lahko na portalu preveri zgodovino svojih opravljenih nakupov. |
+| **Z7** | **Pregled statusov strank:** Administrator lahko pregleduje bazo strank, filtrira po obdobjih in trenutnih statusih. |
+| **Z8** | **Statistika nakupov:** Krovni pregled administracije nad zneski nakupov in uspešnostjo programa lojalnosti. |
+| **Z9** | **SQL poizvedbe:** Zmožnost izvajanja poljubnih neposrednih poizvedb po podatkovni bazi za napredno analitiko. |
+| **Z10**| **Upravljanje nakupnega programa:** Administrator lahko dodaja, ureja ali briše nagrade iz kataloga. |
+| **Z11**| **Upravljanje pravil točkovanja:** Možnost dinamičnega spreminjanja meja za status (zneski) in števila dodeljenih točk. |
 
-### Upravljanje statusov strank
-* Imeli bi radi več nivojev lojalnosti, in sicer: osnovni, bronasti, srebrni in zlati.
-* Ob včlanitvi ima stranka status osnovni.
-* Ko z nakupi preteklega meseca prvič preseže 499 EUR, dobi status srebrni.
-* Če še dvakrat preseže tak znesek (>500), pride v status zlati.
-* Da stranka ohranja status srebrni, mora njen znesek nakupa znašati vsaj 200 EUR, za ohranjanje statusa zlati pa vsaj 500 EUR.
-* Če stranka nima pogojev za ohranitev statusa zlati, pridobi status srebrni.
-* Če stranka nima pogojev za ohranitev statusa srebrni in sicer dva meseca zapored, dobi status bronasti in v njem ostane, vse dokler dva zaporedna meseca ne opravi najmanj za 200 EUR nakupov oziroma, če opravi nakup pod 50 EUR, pride nazaj v osnovni status.
-* Spodnji diagram prikazuje pravila prehajanja med posameznimi nivoji lojalnosti:
+Poslovna logika: Pravila prehajanja med statusi (Vezano na Z3 in Z11)
+Spodnji diagram ponazarja življenjski cikel in prehode statusa stranke na podlagi mesečnega zneska nakupov. To logiko bo zaledni sistem obdelal vsak mesec pred samim dodeljevanjem točk (Z4).
 
 ```mermaid
 stateDiagram-v2
@@ -50,39 +49,20 @@ stateDiagram-v2
     
     Bronasti --> Osnovni : Nakup < 50 EUR
 ```
-
-### Izračun in dodeljevanje točk zvestobe
-* Točke zvestobe bi računali enkrat na mesec za pretekli mesec.
-* Ko stranki dodeljujemo točke zvestobe, ji najprej spremenimo status, v kolikor izpolnjuje pogoje in šele potem dodelimo ustrezno število točk.
-* Več kot bi znašali njeni nakupi, več točk bi stranka dobila.
-* Radi pa bi imeli možnost, da ta pravila še kasneje sami spreminjamo.
+Dodeljevanje točk glede na status (Z4)
 
 | Znesek nakupov | Bronasti | Osnovni | Srebrni | Zlati |
-| :--- | :--- | :--- | :--- | :--- |
 | **Do 200 EUR** | 0 točk | 5 točk | 7.5 točk | 10 točk |
 | **Med 200 EUR in 1000 EUR** | 5 točk | 10 točk | 15 točk | 20 točk |
 | **Nad 1000 EUR** | 10 točk | 20 točk | 30 točk | 40 točk |
 
-### Spletni portal za stranke
-Spletna aplikacija oziroma portal bo strankam omogočal vsaj naslednje možnosti:
-* pregled zbranih točk zvestobe
-* koriščenje točk
-* pregled nakupnega programa
-* pregled zneskov nakupov
-
-### Administracijski vmesnik
-Portal naj omogoča tudi administracijo, pod čemer si predstavljamo vsaj naslednje možnosti:
-* pregled statusov strank za poljubno obdobje
-* pregled statistike nakupov
-* poljubne poizvedbe po podatkovni bazi
-* upravljanje s programom, ki je na voljo kot nagrada za točke zvestobe
-* upravljanje pravil v zvezi s prehajanjem med statusi ter nagrajevanjem
-
-## 3. Tehnične zahteve
-* **Skalabilnost in obseg:** Pričakujemo, da bo v program vključenih vsaj 70% naših strank, kar pomeni dobri 500.000 oseb. Informacijsko podporo bi želeli tržiti tudi izven Slovenije, zato naj bo narejena tako, da bo omogočala tudi bistveno večje število uporabnikov.
-* **Jezikovna podpora:** Vsa informacijska podpora naj bo narejena tako, da bo podpirala dva jezika, slovenščino in angleščino.
-* **Baza podatkov:** V podjetju imamo podatkovno bazo Oracle ter licence zanjo. Želeli bi jo uporabiti tudi za potrebe IS za podporo programu lojalnosti.
-* **Uporabniški vmesnik:** Naj bo narejen tako, da bo čim bolj intuitiven. Uporabljene naj bodo sodobne tehnologije.
+## 3. Nefunkcionalne zahteve
+| ID | Tehnična zahteva |
+| :--- | :--- |
+| **NZ1** |**Skalabilnost:** Sistem mora podpirati najmanj 500.000 uporabnikov (70% trenutnih strank) in biti zasnovan tako, da omogoča enostavno širitev za bistveno večje število uporabnikov za potrebe trženja v tujini. |
+| **NZ2** | **Jezikovna podpora:** Uporabniški vmesnik (portal in administracija) mora podpirati slovenščino in angleščino. |
+| **NZ3** | **Podatkovna baza:** Kot primarna relacijska podatkovna baza se mora uporabiti Oracle Database (že obstoječe licence v podjetju). |
+| **NZ4** | **Uporabniški vmesnik (UX/UI):** Vmesnik mora biti intuitiven, odziven (responsive) in razvit z uporabo sodobnih spletnih tehnologij. |
 
 ## 4. Vmesniki
 * **Poslovni IS:** Podatek o znesku opravljenih nakupov bo moč dobiti iz poslovnega IS, ki ga trgovska veriga uporablja.
@@ -90,10 +70,17 @@ Portal naj omogoča tudi administracijo, pod čemer si predstavljamo vsaj nasled
 ## 5. Slovar izrazov
 * **Program lojalnosti:** Sistem motiviranja strank, da čim več kupijo v trgovski verigi.
 * **Točke zvestobe:** Točke, ki jih stranka zbira z nakupi.
+* **Nivo lojalnosti (Status):** Kategorija člana (osnovni, bronasti, srebrni, zlati), v katero je stranka uvrščena glede na znesek preteklih nakupov. Status neposredno vpliva na število prejetih točk.
+* **Kartica lojalnosti:** Fizični identifikator, ki ga stranka dobi po navadni pošti po uspešni včlanitvi v program.
+* **Uporabniški račun:** Digitalna identiteta stranke, ki jo ta pridobi ob varni spletni registraciji in služi za identifikacijo pri vstopu na portal.
+* **Portal za stranke (Spletna aplikacija):** Spletni vmesnik, ki članom programa omogoča pregled zbranih točk, koriščenje točk, pregled nakupov in nakupnega programa.
+* **Administracija (Admin vmesnik):** Zavarovan del portala, namenjen zaposlenim v trgovski verigi za upravljanje pravil, nagrad, strank in pregled statistike.Poslovni IS: Zaledni (primarni) informacijski sistem trgovske verige, iz katerega sistem lojalnosti pridobiva podatke o zneskih opravljenih nakupov.
+* **Nakupni program (Katalog nagrad):** Nabor nagrad oziroma ugodnosti, ki so na voljo strankam v zameno za njihove zbrane točke zvestobe.
 
 ## 6. Diagram primerov uporabe
 
 Spodnji diagram na visoki ravni prikazuje glavne akterje v sistemu in njihove ključne interakcije (primere uporabe) s spletnim portalom, administracijskim vmesnikom ter zalednim sistemom.
 
-<img width="1024" height="827" alt="image" src="https://github.com/user-attachments/assets/0e852896-bbda-4f43-ba41-ad03aba56427" />
+<img width="741" height="645" alt="image" src="https://github.com/user-attachments/assets/524a3c79-e295-43f4-a36f-092c761f7655" />
+
 
