@@ -92,49 +92,5 @@ Portal naj omogoča tudi administracijo, pod čemer si predstavljamo vsaj nasled
 
 Spodnji diagram na visoki ravni prikazuje glavne akterje v sistemu in njihove ključne interakcije (primere uporabe) s spletnim portalom, administracijskim vmesnikom ter zalednim sistemom.
 
-```mermaid
-flowchart LR
-    %% Akterji
-    Stranka([Stranka])
-    Admin([Administrator])
-    PoslovniIS([Poslovni IS])
+<img width="1024" height="827" alt="image" src="https://github.com/user-attachments/assets/0e852896-bbda-4f43-ba41-ad03aba56427" />
 
-    %% Spletni portal za stranke
-    subgraph Portal za stranke
-        UC1(Registracija prek spleta)
-        UC2(Pregled zbranih točk)
-        UC3(Koriščenje točk)
-        UC4(Pregled nakupnega programa)
-        UC5(Pregled zneskov nakupov)
-    end
-
-    Stranka --> UC1
-    Stranka --> UC2
-    Stranka --> UC3
-    Stranka --> UC4
-    Stranka --> UC5
-
-    %% Administracijski vmesnik
-    subgraph Administracijski vmesnik
-        UC6(Pregled statusov strank)
-        UC7(Pregled statistike nakupov)
-        UC8(Poljubne poizvedbe po bazi)
-        UC9(Upravljanje z nagradami)
-        UC10(Upravljanje pravil in točkovanja)
-    end
-
-    Admin --> UC6
-    Admin --> UC7
-    Admin --> UC8
-    Admin --> UC9
-    Admin --> UC10
-
-    %% Zaledni procesi in integracije
-    subgraph Zaledni sistem
-        UC11(Zajem zneskov nakupov)
-        UC12(Mesečni preračun statusov in točk)
-    end
-
-    PoslovniIS -->|Pošilja podatke| UC11
-    UC11 --> UC12
-```
