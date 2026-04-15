@@ -37,3 +37,29 @@ Zaledni sistem izvaja kritične avtomatizirane procese, ki skrbijo za celovitost
     3.  **Dodeljevanje točk (Z4):** Ko je status uspešno posodobljen, sistem stranki dodeli točke zvestobe glede na veljaven točkovnik za njen nivo in dosežen znesek nakupov.
     4.  **Posodobitev baze:** Končni statusi in novo stanje točk se zapišejo v Oracle podatkovno bazo.
     5.  **Dnevniški zapis (Logging):** Vsak preračun se sistemsko zabeleži za potrebe revizije, odprave napak in administracijskega pregleda.
+
+---
+
+#### 3. Primeri JSON odgovorov in obravnava napak
+
+Vsi odgovori sistema sledijo enotni strukturi, kjer polje `status` pove uspeh operacije, polje `data` pa vsebuje dejanske podatke.
+
+**Uspešni odgovori (Success Responses)**
+
+*Prijava uporabnika (`POST /auth/login`)*
+Vrne JWT žeton in osnovne podatke o prijavljeni osebi.
+```json
+{
+  "status": "success",
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "expires_in": 3600,
+    "user": {
+      "id": 1042,
+      "ime": "Janez",
+      "priimek": "Novak",
+      "email": "janez.novak@example.com",
+      "status_naziv": "Srebrni"
+    }
+  }
+}
