@@ -158,3 +158,27 @@ V primeru napake sistem vrne ustrezen HTTP status in opisno sporočilo o napaki 
 * **404 Not Found:** Vir ne obstaja (npr. neobstoječa nagrada).
 * **422 Unprocessable Entity:** Logična napaka (npr. premalo točk za koriščenje nagrade).
 * **500 Internal Server Error:** Nepričakovana napaka na strežniku ali težava z Oracle bazo.
+
+## 9. Primeri uporabe (Use Cases)
+
+### PU-01: Koriščenje zbranih točk za nagrado
+| Element | Opis |
+| :--- | :--- |
+| **Povezava na zahteve:** | Z5 (Pregled in koriščenje točk) |
+| **Glavni akter:** | Stranka (Prijavljen uporabnik portala) |
+| **Kratek opis:** | Stranka pregleduje katalog nagrad, izbere želeno ugodnost in zanjo unovči svoje zbrane točke zvestobe. |
+| **Predpogoji:** | Stranka je prijavljena in ima na računu pozitivno stanje točk zvestobe. |
+| **Popogoji:** | Stranki je odšteto ustrezno število točk. V podatkovni bazi je ustvarjen nov zapis o uspešni transakciji. |
+
+#### Glavni scenarij uspeha (Happy Path)
+1. Stranka se v portalu pomakne na zavihek **"Katalog"** (Maska 5).
+2. Sistem pridobi seznam vseh aktivnih nagrad prek klica `GET /rewards`.
+3. Stranka si ogleda nagrade in klikne gumb **"Koristi točke"** (Maska 6).
+4. Čelni del prikaže potrditveno okno o odštevanju točk. Stranka potrdi izbiro.
+5. Čelni del pošlje zahtevek na `POST /users/me/redeem`.
+6. Zaledni sistem preveri točke, zapiše transakcijo in vrne uspešen odgovor (`200 OK`).
+7. Sistem prikaže obvestilo *"Nagrada uspešno koriščena"* in osveži stanje točk.
+
+#### Alternativni scenariji (Napake)
+* **A1 - Nezadostno stanje točk:** Če zaledni sistem ugotovi, da stranka nima dovolj točk za nagrado, vrne napako `422 Unprocessable Entity`. Sistem prikaže opozorilo: *"Na vašem računu ni dovolj točk."*
+* **A2 - Seja je potekla:** Če je žeton stranke potekel, API vrne napako `401 Unauthorized`. Sistem stranko preusmeri na prijavni zaslon.
