@@ -63,3 +63,92 @@ Vrne JWT žeton in osnovne podatke o prijavljeni osebi.
     }
   }
 }
+```
+
+*Nadzorna plošča stranke (GET /users/me/dashboard)*
+Vsebuje trenutno stanje točk in informacijo o napredku do naslednjega nivoja.
+
+```json
+{
+  "status": "success",
+  "data": {
+    "zbrane_tocke": 145.5,
+    "trenutni_status": {
+      "id": 3,
+      "naziv": "Srebrni"
+    },
+    "naslednji_status": {
+      "naziv": "Zlati",
+      "manjkajoči_znesek": 350.00
+    }
+  }
+}
+```
+
+*Zgodovina nakupov (GET /users/me/purchases)*
+Seznam transakcij, pridobljen iz poslovnega IS.
+
+```JSON
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 8593,
+      "znesek": 120.50,
+      "datum_nakupa": "2026-03-15T14:30:00Z"
+    },
+    {
+      "id": 8421,
+      "znesek": 450.00,
+      "datum_nakupa": "2026-02-28T09:15:00Z"
+    }
+  ]
+}
+```
+
+*Pravila točkovanja (GET /admin/rules)*
+Struktura, ki jo administrator uporablja za urejanje točkovnika.
+
+```JSON
+{
+  "status": "success",
+  "data": [
+    {
+      "status_id": 1,
+      "status_naziv": "Osnovni",
+      "znesek_od": 0.00,
+      "znesek_do": 200.00,
+      "dodeljene_tocke": 5.0
+    },
+    {
+      "status_id": 4,
+      "status_naziv": "Zlati",
+      "znesek_od": 1000.01,
+      "znesek_do": null,
+      "dodeljene_tocke": 40.0
+    }
+  ]
+}
+```
+
+**Obravnava napak (Error Handling)**
+
+V primeru napake sistem vrne ustrezen HTTP status in opisno sporočilo o napaki v polju message.
+
+*Standardna struktura napake:*
+
+```JSON
+{
+  "status": "error",
+  "code": "STATUS_KODA",
+  "message": "Opis napake v izbranem jeziku."
+}
+```
+Pogoste kode napak:
+
+400 Bad Request: Neveljavni vhodni podatki (npr. napačna oblika e-pošte).
+401 Unauthorized: Manjkajoč ali neveljaven avtentikacijski žeton.
+403 Forbidden: Uporabnik nima pravic za dostop (npr. stranka želi v admin vmesnik).
+404 Not Found: Vir ne obstaja (npr. neobstoječa nagrada).
+422 Unprocessable Entity: Logična napaka (npr. premalo točk za koriščenje nagrade).
+500 Internal Server Error: Nepričakovana napaka na strežniku ali težava z Oracle bazo.
