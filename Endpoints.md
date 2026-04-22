@@ -148,12 +148,13 @@ V primeru napake sistem vrne ustrezen HTTP status in opisno sporočilo o napaki 
   "code": "STATUS_KODA",
   "message": "Opis napake v izbranem jeziku."
 }
-```
-Pogoste kode napak:
 
-400 Bad Request: Neveljavni vhodni podatki (npr. napačna oblika e-pošte).
-401 Unauthorized: Manjkajoč ali neveljaven avtentikacijski žeton.
-403 Forbidden: Uporabnik nima pravic za dostop (npr. stranka želi v admin vmesnik).
-404 Not Found: Vir ne obstaja (npr. neobstoječa nagrada).
-422 Unprocessable Entity: Logična napaka (npr. premalo točk za koriščenje nagrade).
-500 Internal Server Error: Nepričakovana napaka na strežniku ali težava z Oracle bazo.
+```
+**Pogoste kode napak:**
+
+* **400 Bad Request:** Neveljavni vhodni podatki (npr. napačna oblika e-pošte).
+* **401 Unauthorized:** Manjkajoč ali neveljaven avtentikacijski žeton.
+* **403 Forbidden:** Uporabnik nima pravic za dostop (npr. stranka želi v admin vmesnik).
+* **404 Not Found:** Vir ne obstaja (npr. neobstoječa nagrada).
+* **422 Unprocessable Entity:** Logična napaka (npr. premalo točk za koriščenje nagrade).
+* **500 Internal Server Error:** Nepričakovana napaka na strežniku ali težava z Oracle bazo.
