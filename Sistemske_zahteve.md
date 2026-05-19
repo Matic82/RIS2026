@@ -128,7 +128,7 @@ stateDiagram-v2
 | **NZ-02** | Jezikovna podpora | Sistem mora podpirati najmanj **slovenski** in **angleški** jezik. Lokalizirani morajo biti portal za člane, administrativni modul ter sistemska obvestila. | Must have |
 | **NZ-03** | Podatkovna baza | Kot primarna relacijska podatkovna baza se uporablja **Oracle Database**, za katero ima naročnik obstoječe licence. | Must have |
 | **NZ-04** | Varnost — avtentikacija | Sistem mora omogočati varno registracijo in prijavo uporabnikov. Ob registraciji mora biti izvedena verifikacija lastništva elektronskega naslova uporabnika. | Must have |
-| **NZ-05** | Varnost — avtorizacija | Sistem mora podpirati ločevanje uporabniških vlog najmanj na: član programa, administrator in operater. Dostop do funkcionalnosti mora biti omejen glede na vlogo uporabnika. | Must have |
+| **NZ-05** | Varnost — avtorizacija | Sistem mora podpirati ločevanje uporabniških vlog najmanj na: član programa in administrator. Dostop do funkcionalnosti mora biti omejen glede na vlogo uporabnika. | Must have |
 | **NZ-06** | Varnost komunikacije | Vsa komunikacija med uporabniškimi odjemalci in strežniškimi komponentami mora potekati prek varnega protokola HTTPS/TLS. | Must have |
 | **NZ-07** | GDPR skladnost | Sistem mora zagotavljati skladnost z uredbo GDPR, vključno z upravljanjem soglasij, možnostjo izbrisa osebnih podatkov in zaščito občutljivih informacij. | Must have |
 | **NZ-08** | Razpoložljivost | Sistem mora zagotavljati najmanj **99,5 % razpoložljivost** brez upoštevanja načrtovanih vzdrževalnih posegov. | Should have |
@@ -182,6 +182,7 @@ stateDiagram-v2
 ## 6. Diagram primerov uporabe
 
 Spodnji diagram na visoki ravni prikazuje glavne akterje v sistemu in njihove ključne interakcije (primere uporabe) s spletnim portalom, administracijskim vmesnikom ter zalednim sistemom.
+
 ```mermaid
 flowchart LR
     %% Akterji
