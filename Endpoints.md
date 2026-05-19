@@ -33,13 +33,13 @@ Vse končne točke so zasnovane po načelih REST in ne uporabljajo predpone `/ap
 
 Zaledni sistem izvaja avtomatizirane procese, ki skrbijo za celovitost podatkov in pravilno nagrajevanje brez ročnega posega.
 
-**Mesečni preračun lojalnosti (Z3 in Z4)**
+**Mesečni preračun lojalnosti (FZ-04 in FZ-04)**
 * **Urnik (Trigger):** Vsakega 1. v mesecu ob 00:00 (Cron: `0 0 1 * *`).
 * **Vir podatkov:** Poslovni informacijski sistem (IS) trgovske verige Maestro.
 * **Potek procesa:**
     1.  **Pridobivanje podatkov:** Sistem iz poslovnega IS prebere skupne zneske opravljenih nakupov za vse člane za pretekli koledarski mesec.
-    2.  **Preverjanje statusov (Z3):** Na podlagi mesečnih zneskov se izvede prehajanje med statusi v skladu s pravili (npr. prehod v *Srebrni* ob nakupu nad 499 EUR, padci ob nezadostnih nakupih).
-    3.  **Dodeljevanje točk (Z4):** Ko je status posodobljen, sistem stranki dodeli točke zvestobe glede na veljaven točkovnik za njen nivo in dosežen znesek nakupov.
+    2.  **Preverjanje statusov (FZ-03):** Na podlagi mesečnih zneskov se izvede prehajanje med statusi v skladu s pravili (npr. prehod v *Srebrni* ob nakupu nad 499 EUR, padci ob nezadostnih nakupih).
+    3.  **Dodeljevanje točk (FZ-04):** Ko je status posodobljen, sistem stranki dodeli točke zvestobe glede na veljaven točkovnik za njen nivo in dosežen znesek nakupov.
     4.  **Posodobitev baze:** Končni statusi in novo stanje točk se zapišejo v Oracle podatkovno bazo.
     5.  **Logging:** Vsak preračun se sistemsko zabeleži za potrebe revizije in administracijskega pregleda.
 
@@ -164,7 +164,7 @@ V primeru napake sistem vrne ustrezen HTTP status in opisno sporočilo o napaki 
 ### PU-01: Koriščenje zbranih točk za nagrado
 | Element | Opis |
 | :--- | :--- |
-| **Povezava na zahteve:** | Z5 (Pregled in koriščenje točk) |
+| **Povezava na zahteve:** | FZ-05 (Pregled in koriščenje točk) |
 | **Glavni akter:** | Stranka (Prijavljen uporabnik portala) |
 | **Kratek opis:** | Stranka pregleduje katalog nagrad, izbere želeno ugodnost in zanjo unovči svoje zbrane točke zvestobe. |
 | **Predpogoji:** | Stranka je prijavljena in ima na računu pozitivno stanje točk zvestobe. |
