@@ -7,7 +7,6 @@ import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Link } from 'react-router';
 import { TrendingUp, Gift, CreditCard, ArrowRight } from 'lucide-react';
-import * as Progress from '@radix-ui/react-progress';
 
 type PurchaseRow = { period: string; amount: number };
 
@@ -26,17 +25,6 @@ export function MemberDashboard() {
   if (!memberData) return null;
 
   const tierVariant = memberData.tier.toLowerCase() as 'basic' | 'bronze' | 'silver' | 'gold';
-
-  const tierThresholds: Record<string, { next: string | null }> = {
-    Bronze: { next: 'Silver' },
-    Silver: { next: 'Gold' },
-    Gold: { next: null },
-  };
-
-  const currentTierData = tierThresholds[memberData.tier];
-  const progress = currentTierData?.next ? ((memberData.points / 5000) * 100) : 100;
-  const pointsToNext = currentTierData?.next ? (5000 - memberData.points) : 0;
-  const nextTierLabel = currentTierData?.next ? tTier(currentTierData.next) : null;
 
   return (
     <div className="space-y-6">

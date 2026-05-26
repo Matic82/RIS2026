@@ -1,0 +1,7 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./maestro-app" },
+    { "path": "./maestro-app/server" }
+  ]
+}
