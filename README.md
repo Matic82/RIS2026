@@ -139,7 +139,7 @@ maestro-app/
 
 ---
 
-*Opomba: Pri snovanju, pripravi dokumentacije in analizi zahtev sta bila v pomoč uporabljena jezikovna modela Gemini in Claude. Interaktivni prototip je bil generiran s pomočjo Figma AI.*
+*Opomba: Pri snovanju, pripravi dokumentacije in analizi zahtev sta bila v pomoč uporabljena jezikovna modela Gemini in Claude. Interaktivni prototip je bil generiran s pomočjo Figma AI. Aplikacija pa s Cursorjem.*
 
 ## Author
 
