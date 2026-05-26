@@ -29,6 +29,7 @@ Poleg sistemskih zahtev projekt vsebuje še naslednje datoteke in mape z arhitek
 * **`Endpoints.md`**: Tehnična specifikacija REST API končnih točk.
 * **`NacrtRazvojProjekta.md`**: Razvojni načrt projekta (26 sprintov).
 * **Mapa `maske/`**: 13 zaslonskih mask (prototipov uporabniškega vmesnika).
+* **Mapa `maestro-app/`**: Polna implementacija sistema (React portal, Node.js API, Oracle baza).
 
 ---
 
@@ -73,18 +74,21 @@ Polna implementacija sistema (spec v1.5) z **Oracle Database**, **Node.js API** 
 
 ### Hitri zagon
 
+Vse ukaze za zagon izvajaj iz mape `maestro-app/`.
+
 #### 1. Zaženi Oracle
 
 ```bash
+cd maestro-app
 docker compose up -d
 ```
 
-Počakaj, da je kontejner zdrav (~2 minuti). Shema in seed SQL se izvedeta iz `database/`.
+Počakaj, da je kontejner zdrav (~2 minuti). Shema in seed SQL se izvedeta iz `maestro-app/database/`.
 
 #### 2. API strežnik
 
 ```bash
-cd server
+cd maestro-app/server
 cp .env.example .env
 npm install
 npm run db:setup
@@ -96,6 +100,7 @@ API: http://localhost:3001
 #### 3. Frontend
 
 ```bash
+cd maestro-app
 npm install
 npm run dev
 ```
@@ -105,6 +110,7 @@ Portal: http://localhost:5173
 Ali oboje hkrati:
 
 ```bash
+cd maestro-app
 npm install
 npm run dev:all
 ```
@@ -120,12 +126,15 @@ npm run dev:all
 ### Struktura projekta
 
 ```
-database/          Oracle DDL + seed
-server/            Express API + loyalty engine
-src/               React member + admin portal
-data/              Sample ERP import file
-docker-compose.yml Oracle XE
-maske/             Zaslonske maske (specifikacija)
+README.md              Dokumentacija repozitorija
+Sistemske_zahteve.md   Sistemske zahteve
+maske/                 Zaslonske maske (specifikacija)
+maestro-app/
+  database/            Oracle DDL + seed
+  server/              Express API + loyalty engine
+  src/                 React member + admin portal
+  data/                Sample ERP import file
+  docker-compose.yml   Oracle XE
 ```
 
 ---
