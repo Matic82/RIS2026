@@ -1,6 +1,6 @@
 /**
  * Add April 2026 purchases for testing billing simulation
- * 
+ *
  * Ana Novak: 550€ (Silver → Gold)
  * Robert Brodnik: 500€ (Basic → Silver)
  * Marko Kovač: 0€ (no purchase)

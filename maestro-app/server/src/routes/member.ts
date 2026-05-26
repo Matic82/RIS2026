@@ -64,8 +64,25 @@ router.get('/purchases', async (req, res) => {
     MESEC: number;
     LETO: number;
     DATUM_UVOZA: Date;
+    STATUS_UVOZA: string;
+    POINTS_EARNED: number | null;
+    TIER_CODE: TierCode | null;
+    HAS_BILLING: number;
   }>(
-    `SELECT n.ID_NAKUPA, n.ZNESEK, o.MESEC, o.LETO, n.DATUM_UVOZA
+    `SELECT n.ID_NAKUPA, n.ZNESEK, o.MESEC, o.LETO, n.DATUM_UVOZA, o.STATUS_UVOZA,
+            (SELECT NVL(SUM(t.STEVILO_TOCK), 0)
+             FROM TOCKE_TRANSAKCIJA t
+             WHERE t.ID_CLANA = n.ID_CLANA AND t.ID_OBDOBJA = o.ID_OBDOBJA AND t.TIP = 'EARNED') AS POINTS_EARNED,
+            (SELECT COUNT(*)
+             FROM TOCKE_TRANSAKCIJA t
+             WHERE t.ID_CLANA = n.ID_CLANA AND t.ID_OBDOBJA = o.ID_OBDOBJA AND t.TIP = 'EARNED') AS HAS_BILLING,
+            (SELECT n2.KODA
+             FROM STATUS_CLANA s
+             JOIN NIVO_LOJALNOSTI n2 ON n2.ID_NIVOJA = s.ID_NIVOJA
+             WHERE s.ID_CLANA = n.ID_CLANA
+               AND s.DATUM_OD <= NVL(o.DATUM_UVOZA, n.DATUM_UVOZA)
+             ORDER BY s.DATUM_OD DESC
+             FETCH FIRST 1 ROW ONLY) AS TIER_CODE
      FROM NAKUP n JOIN OBRACUNSKO_OBDOBJE o ON o.ID_OBDOBJA = n.ID_OBDOBJA
      WHERE n.ID_CLANA = :memberId
      ORDER BY o.LETO DESC, o.MESEC DESC`,
@@ -80,6 +97,9 @@ router.get('/purchases', async (req, res) => {
       year: Number(r.LETO),
       period: `${r.MESEC}/${r.LETO}`,
       importDate: r.DATUM_UVOZA,
+      pointsEarned: Number(r.POINTS_EARNED ?? 0),
+      billed: Number(r.HAS_BILLING) > 0,
+      tierAtTime: r.TIER_CODE ? tierEn(r.TIER_CODE) : null,
     }))
   );
 });

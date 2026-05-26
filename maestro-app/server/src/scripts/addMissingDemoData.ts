@@ -6,7 +6,7 @@
  */
 
 import bcrypt from 'bcryptjs';
-import { initDb, closeDb, withTransaction, query, execute } from '../db.js';
+import { initDb, closeDb, withTransaction, query } from '../db.js';
 import { ROBERT_BRODNIK_EMAIL } from '../services/erpImportService.js';
 
 async function createMember(
@@ -84,20 +84,6 @@ async function createMember(
 
 async function main() {
   await initDb();
-
-  const robertByName = await query<{ ID_CLANA: number; EMAIL: string }>(
-    `SELECT ID_CLANA, EMAIL FROM CLAN WHERE IME = 'Robert' AND PRIIMEK = 'Brodnik'`
-  );
-  if (robertByName[0] && robertByName[0].EMAIL !== ROBERT_BRODNIK_EMAIL) {
-    await execute(
-      `UPDATE CLAN SET EMAIL = :newEmail WHERE ID_CLANA = :memberId`,
-      { newEmail: ROBERT_BRODNIK_EMAIL, memberId: robertByName[0].ID_CLANA }
-    );
-    await execute(
-      `UPDATE UPORABNISK_RACUN SET UPORABNISKO_IME = :newEmail WHERE ID_CLANA = :memberId`,
-      { newEmail: ROBERT_BRODNIK_EMAIL, memberId: robertByName[0].ID_CLANA }
-    );
-  }
 
   // Check if members already exist
   const existing = await query(
