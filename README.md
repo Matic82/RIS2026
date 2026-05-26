@@ -1,10 +1,52 @@
-# Maestro Loyalty Program
+# Program lojalnosti Maestro
 
-Full-stack loyalty program system (spec v1.5) with **Oracle Database**, **Node.js API**, and **React portal** for members and administrators.
+Ta repozitorij vsebuje specifikacijo zahtev, analizo, spremljajočo dokumentacijo in **implementacijo** informacijskega sistema programa lojalnosti Maestro.
 
-Originally exported from Figma; now wired to a real backend implementing status rules, points, rewards, ERP import, and monthly billing.
+---
 
-## Architecture
+## Sistemske zahteve
+
+Dokument s sistemskimi zahtevami celovito opisuje projekt in vsebuje naslednje ključne sklope:
+
+* **Zgodovina različic**
+* **Kratek opis sistema**
+* **Funkcionalne zahteve**
+* **Nefunkcionalne zahteve**
+* **Zunanji vmesniki**
+* **Slovar izrazov**
+* **Diagram primerov uporabe**
+
+---
+
+## Struktura in datoteke repozitorija
+
+Poleg sistemskih zahtev projekt vsebuje še naslednje datoteke in mape z arhitekturnimi ter uporabniškimi specifikacijami:
+
+* **`KonceptualniModel.png`**: Konceptualni podatkovni model sistema (entitete in relacije).
+* **`funkcionalnaDekpomozicijaMaestro.png`**: Hierarhična razčlenitev glavnih modulov in funkcionalnosti.
+* **`TabelaAnaliza.md`**: Zbirna tabela sledljivosti zahtev (ID-ji, opisi, maske, tabele).
+* **`primeriUporabe.md`**: Podrobni primeri uporabe (PU-01 do PU-04) s tokovi dogodkov in sprejemnimi testi.
+* **`Endpoints.md`**: Tehnična specifikacija REST API končnih točk.
+* **`NacrtRazvojProjekta.md`**: Razvojni načrt projekta (26 sprintov).
+* **Mapa `maske/`**: 13 zaslonskih mask (prototipov uporabniškega vmesnika).
+
+---
+
+## Interaktivni prototip (Demo)
+
+Interaktivni prototip uporabniškega vmesnika je dostopen na spodnjem naslovu. Prototip pokriva vse ključne zaslonske maske članske in administrativne strani portala.
+
+🔗 **[Odpri interaktivni demo →](https://www.figma.com/make/OsBHKweYZUuR0npez80TCW/Maestro-Loyalty-Program-Screens?code-node-id=0-9&p=f&fullscreen=1)**
+
+> Prototip je bil ustvarjen z orodjem **Figma AI (Make Designs)** na podlagi podrobnih specifikacij zaslonskih mask.
+
+---
+
+## Implementacija aplikacije
+
+Polna implementacija sistema (spec v1.5) z **Oracle Database**, **Node.js API** in **React portalom** za člane in administratorje.
+
+### Arhitektura
 
 ```
 ┌─────────────────┐     HTTPS/REST      ┌──────────────────┐
@@ -23,23 +65,23 @@ Originally exported from Figma; now wired to a real backend implementing status 
                                          └──────────────────┘
 ```
 
-## Prerequisites
+### Predpogoji
 
 - **Node.js** 20+
-- **Docker Desktop** (for local Oracle XE)
-- **Oracle Instant Client** (optional on Windows; `oracledb` thin mode works without it for XE)
+- **Docker Desktop** (za lokalni Oracle XE)
+- **Oracle Instant Client** (opcijsko na Windows; `oracledb` thin mode deluje brez njega za XE)
 
-## Quick start
+### Hitri zagon
 
-### 1. Start Oracle
+#### 1. Zaženi Oracle
 
 ```bash
 docker compose up -d
 ```
 
-Wait until the container is healthy (~2 minutes). Schema and seed SQL run from `database/`.
+Počakaj, da je kontejner zdrav (~2 minuti). Shema in seed SQL se izvedeta iz `database/`.
 
-### 2. API server
+#### 2. API strežnik
 
 ```bash
 cd server
@@ -49,20 +91,9 @@ npm run db:setup
 npm run dev
 ```
 
-(`db:setup` = schema + seed + demo accounts. Or run `db:init-schema` then `db:init-demo` separately.)
-
-If you see **ORA-00942**, the schema was never created — run `npm run db:init-schema` after Oracle is up.
-
-```bash
-# alternative step-by-step
-npm run db:init-schema
-npm run db:init-demo
-npm run dev
-```
-
 API: http://localhost:3001
 
-### 3. Frontend
+#### 3. Frontend
 
 ```bash
 npm install
@@ -71,56 +102,22 @@ npm run dev
 
 Portal: http://localhost:5173
 
-Or run both:
+Ali oboje hkrati:
 
 ```bash
 npm install
 npm run dev:all
 ```
 
-## Demo accounts
+### Demo računi
 
-| Role   | Email                 | Password   |
-|--------|-----------------------|------------|
-| Admin  | admin@maestro.si      | admin123   |
-| Member | ana.novak@maestro.si  | member123  |
-| Member | marko.kovac@maestro.si| member123  |
+| Vloga  | Email                    | Geslo      |
+|--------|--------------------------|------------|
+| Admin  | admin@maestro.si         | admin123   |
+| Član   | ana.novak@maestro.si     | member123  |
+| Član   | marko.kovac@maestro.si   | member123  |
 
-New registrations require **email verification** (link printed in the API console in dev mode).
-
-## Background jobs
-
-**ERP purchase import** (FZ-12):
-
-```bash
-npm run job:import-erp -- data/erp-import-example.json
-```
-
-**Monthly status + points billing** (FZ-03, FZ-04):
-
-```bash
-npm run job:monthly -- 4 2026
-```
-
-Order: import purchases → run monthly job (status update, then points on new status).
-
-## Implemented requirements (summary)
-
-| ID | Feature |
-|----|---------|
-| FZ-01 | Registration + email verification (double opt-in) |
-| FZ-02 | Loyalty card request on registration |
-| FZ-03–04 | Monthly status recalculation + points (configurable rules) |
-| FZ-05–06 | Member points, rewards, purchase history |
-| FZ-07–09 | Admin customers, dashboard, SQL (SELECT only) |
-| FZ-10–11 | Rewards catalog CRUD, configurable rules in DB |
-| FZ-12 | ERP JSON import script |
-| FZ-13–15 | JWT auth, roles, EN/SL UI |
-| FZ-14 | Status history in `STATUS_CLANA` |
-| NZ-03 | Oracle as primary database |
-| NZ-12 | `REVIZIJSKI_DNEVNIK` audit trail |
-
-## Project structure
+### Struktura projekta
 
 ```
 database/          Oracle DDL + seed
@@ -128,14 +125,12 @@ server/            Express API + loyalty engine
 src/               React member + admin portal
 data/              Sample ERP import file
 docker-compose.yml Oracle XE
+maske/             Zaslonske maske (specifikacija)
 ```
 
-## Production notes
+---
 
-- Change `JWT_SECRET` and Oracle credentials
-- Configure real SMTP for email (replace `emailService` dev logger)
-- Schedule `job:import-erp` and `job:monthly` via cron/Task Scheduler
-- Use HTTPS reverse proxy (nginx) in front of API and static frontend
+*Opomba: Pri snovanju, pripravi dokumentacije in analizi zahtev sta bila v pomoč uporabljena jezikovna modela Gemini in Claude. Interaktivni prototip je bil generiran s pomočjo Figma AI.*
 
 ## Author
 
