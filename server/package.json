@@ -1,0 +1,43 @@
+{
+  "name": "maestro-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "db:init-schema": "tsx src/scripts/initSchema.ts",
+    "db:ensure-password-reset": "tsx src/scripts/ensurePasswordResetSchema.ts",
+    "db:ensure-import-columns": "tsx src/scripts/ensureImportColumns.ts",
+    "db:init-demo": "tsx src/scripts/initDemoData.ts",
+    "db:add-demo": "tsx src/scripts/addMissingDemoData.ts",
+    "db:remove-april": "tsx src/scripts/removeAprilPurchases.ts",
+    "db:add-april": "tsx src/scripts/addAprilPurchases.ts",
+    "db:setup": "npm run db:init-schema && npm run db:init-demo",
+    "job:monthly": "tsx src/scripts/runMonthlyBilling.ts",
+    "job:billing-auto": "tsx src/scripts/scheduledBilling.ts",
+    "job:import-erp": "tsx src/scripts/importErpPurchases.ts"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.14",
+    "oracledb": "^6.8.0",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/nodemailer": "^6.4.15",
+    "@types/node": "^22.15.21",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
